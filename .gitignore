@@ -63,3 +63,5 @@ db/*.db-journal
 
 # dev screenshots (local only)
 screenshot-*.png
+
+!.env.example
