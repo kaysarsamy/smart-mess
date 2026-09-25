@@ -60,3 +60,6 @@ db/*.db-journal
 
 # github auth scratch
 /.gh-auth/
+
+# dev screenshots (local only)
+screenshot-*.png
