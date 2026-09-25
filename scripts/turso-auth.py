@@ -28,7 +28,7 @@ def daemonize() -> None:
 def main() -> None:
     os.makedirs("/home/z/my-project/.gh-auth", exist_ok=True)
     daemonize()
-    os.execvp("/home/z/.turso/turso", ["turso", "auth", "login"])
+    os.execvp("/home/z/.turso/turso", ["turso", "auth", "login", "--headless"])
 
 
 if __name__ == "__main__":
