@@ -1,7 +1,8 @@
-// Prisma client. Uses a plain SQLite connection for local dev, and the
-// libSQL driver adapter for remote Turso (serverless / Vercel).
+// Prisma client. Uses a plain SQLite connection for local dev (file: URL),
+// and the @prisma/adapter-libsql driver adapter for remote Turso (libsql://
+// URL) so the same schema works on Vercel/serverless.
 import { PrismaClient } from '@prisma/client'
-import { PrismaLibSQL } from '@prisma/adapter-libsql'
+import { PrismaLibSql } from '@prisma/adapter-libsql'
 import { createClient } from '@libsql/client'
 
 const globalForPrisma = globalThis as unknown as {
@@ -26,7 +27,7 @@ function createPrismaClient(): PrismaClient {
       url,
       authToken: process.env.DATABASE_AUTH_TOKEN ?? undefined,
     })
-    const adapter = new PrismaLibSQL(libsql)
+    const adapter = new PrismaLibSql(libsql)
     return new PrismaClient({
       adapter,
       log: logOptions,
