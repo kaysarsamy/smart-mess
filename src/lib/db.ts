@@ -3,7 +3,6 @@
 // URL) so the same schema works on Vercel/serverless.
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
-import { createClient } from '@libsql/client'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
@@ -16,18 +15,18 @@ const logOptions =
 
 function createPrismaClient(): PrismaClient {
   const url = process.env.DATABASE_URL ?? 'file:./db/custom.db'
-  // Remote libSQL (Turso) — used in production / Vercel
+  // Remote libSQL (Turso) — used in production / Vercel.
+  // The adapter takes a config object { url, authToken } directly.
   if (
     url.startsWith('libsql:') ||
     url.startsWith('http:') ||
     url.startsWith('https:') ||
     url.startsWith('wss:')
   ) {
-    const libsql = createClient({
+    const adapter = new PrismaLibSql({
       url,
       authToken: process.env.DATABASE_AUTH_TOKEN ?? undefined,
     })
-    const adapter = new PrismaLibSql(libsql)
     return new PrismaClient({
       adapter,
       log: logOptions,
