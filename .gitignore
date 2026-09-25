@@ -57,3 +57,6 @@ db/*.db
 db/*.db-journal
 *.db
 *.db-journal
+
+# github auth scratch
+/.gh-auth/
